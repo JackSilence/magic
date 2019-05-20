@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
@@ -35,7 +36,7 @@ public abstract class Selenium<T> implements IService {
 		WebDriver driver = chrome( arguments );
 
 		try {
-			if ( url != null ) {
+			if ( StringUtils.isNotEmpty( url ) ) {
 				driver.get( url );
 
 			}
