@@ -35,7 +35,10 @@ public abstract class Selenium<T> implements IService {
 		WebDriver driver = chrome( arguments );
 
 		try {
-			driver.get( url );
+			if ( url != null ) {
+				driver.get( url );
+
+			}
 
 			return exec( driver );
 
@@ -43,6 +46,10 @@ public abstract class Selenium<T> implements IService {
 			driver.quit();
 
 		}
+	}
+
+	protected T exec( String... arguments ) {
+		return exec( null, arguments );
 	}
 
 	protected BufferedImage screenshot( WebDriver driver, WebElement element ) throws IOException {
