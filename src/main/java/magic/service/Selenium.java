@@ -50,14 +50,20 @@ public abstract class Selenium<T> implements IService {
 		}
 	}
 
-	protected BufferedImage screenshot( WebDriver driver, WebElement element ) throws IOException {
+	protected BufferedImage screenshot( WebDriver driver, WebElement element ) {
 		File screenshot = ( ( TakesScreenshot ) driver ).getScreenshotAs( OutputType.FILE );
 
 		Point point = element.getLocation();
 
 		Dimension size = element.getSize();
 
-		return ImageIO.read( screenshot ).getSubimage( point.getX(), point.getY(), size.getWidth(), size.getHeight() );
+		try {
+			return ImageIO.read( screenshot ).getSubimage( point.getX(), point.getY(), size.getWidth(), size.getHeight() );
+
+		} catch ( IOException e ) {
+			throw new RuntimeException( e );
+
+		}
 	}
 
 	protected String base64( BufferedImage image ) {

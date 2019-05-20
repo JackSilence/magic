@@ -23,7 +23,12 @@ public class Utils {
 		}
 	}
 
-	public static String upload( Object file, String publicId ) throws IOException {
-		return new Cloudinary().uploader().upload( file, ObjectUtils.asMap( "public_id", publicId ) ).get( "secure_url" ).toString();
+	public static String upload( Object file, String publicId ) {
+		try {
+			return new Cloudinary().uploader().upload( file, ObjectUtils.asMap( "public_id", publicId ) ).get( "secure_url" ).toString();
+
+		} catch ( IOException e ) {
+			throw new RuntimeException( e );
+		}
 	}
 }
