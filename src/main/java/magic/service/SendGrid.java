@@ -13,10 +13,9 @@ import com.sendgrid.Mail;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
-import com.sendgrid.SendGrid;
 
-@Service( "sendGrid" )
-public class SendGridMail implements IMailService {
+@Service
+public class SendGrid implements IMailService {
 	private final Logger log = LoggerFactory.getLogger( this.getClass() );
 
 	@Value( "${sendgrid.api.key:}" )
@@ -36,7 +35,7 @@ public class SendGridMail implements IMailService {
 			request.setEndpoint( "mail/send" );
 			request.setBody( new Mail( from, subject, to, new Content( "text/html", content ) ).build() );
 
-			Response response = new SendGrid( key ).api( request );
+			Response response = new com.sendgrid.SendGrid( key ).api( request );
 
 			log.info( "Status: {}", response.getStatusCode() );
 
