@@ -31,23 +31,25 @@ public abstract class Selenium<T> implements IService {
 	@Value( "${GOOGLE_CHROME_SHIM:}" )
 	private String bin;
 
-	protected T exec( String... arguments ) {
+	protected void exec( String url, T result, String... arguments ) {
 		WebDriver driver = chrome( arguments );
 
 		try {
-			String url = url();
-
 			if ( url != null ) {
 				driver.get( url );
 
 			}
 
-			return exec( driver );
+			exec( driver, result );
 
 		} finally {
 			driver.quit();
 
 		}
+	}
+
+	protected void exec( T result, String... arguments ) {
+		exec( null, result, arguments );
 	}
 
 	protected BufferedImage screenshot( WebDriver driver, WebElement element ) {
@@ -92,11 +94,7 @@ public abstract class Selenium<T> implements IService {
 		}
 	}
 
-	protected String url() {
-		return null;
-	}
-
-	protected abstract T exec( WebDriver driver );
+	protected abstract void exec( WebDriver driver, T result );
 
 	private WebDriver chrome( String... arguments ) {
 		ChromeOptions options = new ChromeOptions();
