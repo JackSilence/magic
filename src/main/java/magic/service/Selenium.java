@@ -48,10 +48,6 @@ public abstract class Selenium<T> implements IService {
 		}
 	}
 
-	protected T exec( String... arguments ) {
-		return exec( null, arguments );
-	}
-
 	protected BufferedImage screenshot( WebDriver driver, WebElement element ) throws IOException {
 		File screenshot = ( ( TakesScreenshot ) driver ).getScreenshotAs( OutputType.FILE );
 
