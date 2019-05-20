@@ -3,6 +3,7 @@
 <configuration debug="true">
 	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
 	<include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+	<springProperty scope="context" name="appName" source="app.name" defaultValue="APP" />
 	<appender name="MAIL" class="ch.qos.logback.classic.net.SMTPAppender">
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>error</level>
@@ -14,7 +15,7 @@
 		<username>${log.mail.username}</username>
 		<password>${log.mail.password}</password>
 		<to>${log.mail.to}</to>
-		<subject>[%p] ${app.name} \(%C{0}:%L\)</subject>
+		<subject>[%p] ${appName} \(%C{0}:%L\)</subject>
 		<layout class="ch.qos.logback.classic.html.HTMLLayout">
 			<pattern>%msg%C%d</pattern>
 		</layout>
