@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
@@ -32,11 +31,13 @@ public abstract class Selenium<T> implements IService {
 	@Value( "${GOOGLE_CHROME_SHIM:}" )
 	private String bin;
 
-	protected T exec( String url, String... arguments ) {
+	protected T exec( String... arguments ) {
 		WebDriver driver = chrome( arguments );
 
 		try {
-			if ( StringUtils.isNotEmpty( url ) ) {
+			String url = url();
+
+			if ( url != null ) {
 				driver.get( url );
 
 			}
@@ -83,6 +84,10 @@ public abstract class Selenium<T> implements IService {
 			throw new RuntimeException();
 
 		}
+	}
+
+	protected String url() {
+		return null;
 	}
 
 	protected abstract T exec( WebDriver driver );
