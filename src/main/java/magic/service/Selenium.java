@@ -31,11 +31,11 @@ public abstract class Selenium implements IService {
 	@Value( "${GOOGLE_CHROME_SHIM:}" )
 	private String bin;
 
-	protected final void exec( String... arguments ) {
+	protected final void run( String... arguments ) {
 		WebDriver driver = chrome( arguments );
 
 		try {
-			exec( driver );
+			run( driver );
 
 		} finally {
 			driver.quit();
@@ -85,7 +85,7 @@ public abstract class Selenium implements IService {
 		}
 	}
 
-	protected abstract void exec( WebDriver driver );
+	protected abstract void run( WebDriver driver );
 
 	private WebDriver chrome( String... arguments ) {
 		ChromeOptions options = new ChromeOptions();
