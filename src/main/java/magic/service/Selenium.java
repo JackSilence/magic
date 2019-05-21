@@ -9,9 +9,12 @@ import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -41,6 +44,14 @@ public abstract class Selenium implements IService {
 			driver.quit();
 
 		}
+	}
+
+	protected final void script( WebDriver driver, String script ) {
+		( ( JavascriptExecutor ) driver ).executeScript( script );
+	}
+
+	protected final WebElement find( SearchContext context, String css ) {
+		return context.findElement( By.cssSelector( css ) );
 	}
 
 	protected final BufferedImage screenshot( WebDriver driver, WebElement element ) {
