@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public abstract class Selenium<T> implements IService {
+public abstract class Selenium implements IService {
 	protected final Logger log = LoggerFactory.getLogger( getClass() );
 
 	private static final String DATA_URI = "data:image/png;base64,%s";
@@ -31,16 +31,11 @@ public abstract class Selenium<T> implements IService {
 	@Value( "${GOOGLE_CHROME_SHIM:}" )
 	private String bin;
 
-	protected void exec( String url, T result, String... arguments ) {
+	protected final void exec( String... arguments ) {
 		WebDriver driver = chrome( arguments );
 
 		try {
-			if ( url != null ) {
-				driver.get( url );
-
-			}
-
-			exec( driver, result );
+			exec( driver );
 
 		} finally {
 			driver.quit();
@@ -48,11 +43,7 @@ public abstract class Selenium<T> implements IService {
 		}
 	}
 
-	protected void exec( T result, String... arguments ) {
-		exec( null, result, arguments );
-	}
-
-	protected BufferedImage screenshot( WebDriver driver, WebElement element ) {
+	protected final BufferedImage screenshot( WebDriver driver, WebElement element ) {
 		File screenshot = ( ( TakesScreenshot ) driver ).getScreenshotAs( OutputType.FILE );
 
 		Point point = element.getLocation();
@@ -68,7 +59,7 @@ public abstract class Selenium<T> implements IService {
 		}
 	}
 
-	protected String base64( BufferedImage image ) {
+	protected final String base64( BufferedImage image ) {
 		try (ByteArrayOutputStream stream = new ByteArrayOutputStream()) {
 			ImageIO.write( image, "png", stream );
 
@@ -80,11 +71,11 @@ public abstract class Selenium<T> implements IService {
 		}
 	}
 
-	protected void sleep() {
+	protected final void sleep() {
 		sleep( 5000 );
 	}
 
-	protected void sleep( long millis ) {
+	protected final void sleep( long millis ) {
 		try {
 			Thread.sleep( millis );
 
@@ -94,7 +85,7 @@ public abstract class Selenium<T> implements IService {
 		}
 	}
 
-	protected abstract void exec( WebDriver driver, T result );
+	protected abstract void exec( WebDriver driver );
 
 	private WebDriver chrome( String... arguments ) {
 		ChromeOptions options = new ChromeOptions();
