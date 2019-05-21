@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
@@ -52,6 +53,10 @@ public abstract class Selenium implements IService {
 
 	protected final WebElement find( SearchContext context, String css ) {
 		return context.findElement( By.cssSelector( css ) );
+	}
+
+	protected final List<WebElement> list( SearchContext context, String css ) {
+		return context.findElements( By.cssSelector( css ) );
 	}
 
 	protected final BufferedImage screenshot( WebDriver driver, WebElement element ) {
