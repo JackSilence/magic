@@ -3,7 +3,7 @@
 <configuration debug="true">
 	<springProperty scope="context" name="appName" source="app.name" defaultValue="APP" />
 	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
-	<property name="CONSOLE_LOG_PATTERN" value="[${appName}][%d] %p %C{0}:%L - %m%n" />
+	<property name="CONSOLE_LOG_PATTERN" value="[%d][${appName}] %p %C{0}:%L - %m%n" />
 	<include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 	<appender name="MAIL" class="ch.qos.logback.classic.net.SMTPAppender">
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
