@@ -3,9 +3,11 @@ package magic.service;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cloudinary.utils.ObjectUtils;
 
+@Service
 public class Cloudinary {
 	@Autowired
 	private Slack slack;
