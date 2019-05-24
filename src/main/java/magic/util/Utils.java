@@ -12,9 +12,6 @@ import org.apache.http.ParseException;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.util.EntityUtils;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
-
 public class Utils {
 	private static final int DEFAULT_TIMEOUT = 15000;
 
@@ -85,15 +82,6 @@ public class Utils {
 
 		} catch ( IOException e ) {
 			throw new RuntimeException( "Path: " + path, e );
-		}
-	}
-
-	public static String upload( Object file, String publicId ) {
-		try {
-			return new Cloudinary().uploader().upload( file, ObjectUtils.asMap( "public_id", publicId ) ).get( "secure_url" ).toString();
-
-		} catch ( IOException e ) {
-			throw new RuntimeException( e );
 		}
 	}
 }
