@@ -43,7 +43,7 @@ public class SendGrid implements IMailService {
 
 			log.info( "Subject: {}, status: {}", subject, response.getStatusCode() );
 
-			slack.message( String.format( "[%s] -> OK!", subject ) );
+			slack.message( String.format( "%s -> OK", subject ) );
 
 		} catch ( IOException e ) {
 			throw new RuntimeException( "Failed to send (SendGrid): " + subject, e );

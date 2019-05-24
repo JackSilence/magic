@@ -22,6 +22,6 @@ public class ExecuteController {
 	public Map<String, String> execute( @PathVariable String name ) {
 		executor.exec( name );
 
-		return slack.text( "OK!" );
+		return slack.text( "OK" );
 	}
 }
