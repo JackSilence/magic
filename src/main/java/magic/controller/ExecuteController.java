@@ -2,16 +2,26 @@ package magic.controller;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import magic.service.AsyncExecutor;
+import magic.service.IService;
 import magic.service.Slack;
 
 @RestController
 public class ExecuteController {
+	private final Logger log = LoggerFactory.getLogger( this.getClass() );
+
+	@Autowired
+	private ApplicationContext context;
+
 	@Autowired
 	private AsyncExecutor executor;
 
@@ -20,8 +30,24 @@ public class ExecuteController {
 
 	@PostMapping( "/execute/{name}" )
 	public Map<String, String> execute( @PathVariable String name ) {
-		executor.exec( name );
+		try {
+			Object bean = context.getBean( name );
 
-		return slack.text( "OK" );
+			Assert.isInstanceOf( IService.class, bean );
+
+			String message = "Execute task manually: " + name;
+
+			log.error( message );
+
+			executor.exec( ( IService ) bean );
+
+			return slack.text( message );
+
+		} catch ( Exception e ) {
+			log.error( "", e );
+
+			return slack.text( e.getMessage() );
+
+		}
 	}
 }
