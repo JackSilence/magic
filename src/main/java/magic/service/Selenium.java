@@ -23,6 +23,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -32,18 +33,28 @@ public abstract class Selenium implements IService {
 
 	private static final String DATA_URI = "data:image/png;base64,%s";
 
+	@Autowired
+	protected Slack slack;
+
 	@Value( "${GOOGLE_CHROME_SHIM:}" )
-	private String bin;
+	protected String bin;
 
 	protected final void run( String... arguments ) {
-		WebDriver driver = chrome( arguments );
+		WebDriver driver = null;
 
 		try {
-			run( driver );
+			run( driver = chrome( arguments ) );
+
+		} catch ( RuntimeException e ) {
+			log.error( "", e );
+
+			slack.message( e.getMessage() );
 
 		} finally {
-			driver.quit();
+			if ( driver != null ) {
+				driver.quit();
 
+			}
 		}
 	}
 
