@@ -2,6 +2,8 @@ package magic.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ public class ExecuteController {
 	private Slack slack;
 
 	@PostMapping( "/execute/{name}" )
-	public Map<String, String> execute( @PathVariable String name ) {
+	public Map<String, String> execute( @PathVariable String name, HttpServletRequest request ) {
 		try {
 			Object bean = context.getBean( name );
 
