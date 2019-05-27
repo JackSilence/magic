@@ -2,8 +2,6 @@ package magic.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RestController;
 
 import magic.service.AsyncExecutor;
@@ -31,7 +30,7 @@ public class ExecuteController {
 	private Slack slack;
 
 	@PostMapping( "/execute/{name}" )
-	public Map<String, String> execute( @PathVariable String name, HttpServletRequest request ) {
+	public Map<String, String> execute( @PathVariable String name, @RequestAttribute( required = false ) String text ) {
 		try {
 			Object bean = context.getBean( name );
 
