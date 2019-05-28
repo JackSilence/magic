@@ -3,7 +3,9 @@ package magic.util;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
@@ -83,5 +85,9 @@ public class Utils {
 		} catch ( IOException e ) {
 			throw new RuntimeException( "Path: " + path, e );
 		}
+	}
+
+	public static String subject( String text ) {
+		return String.format( "%s_%s", text, new SimpleDateFormat( "yyyyMMddHH" ).format( new Date() ) );
 	}
 }

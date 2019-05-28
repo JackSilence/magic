@@ -4,8 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -99,10 +97,6 @@ public abstract class Selenium implements IService {
 			throw new RuntimeException( e );
 
 		}
-	}
-
-	protected final String subject( String text ) {
-		return String.format( "%s_%s", text, new SimpleDateFormat( "yyyyMMddHH" ).format( new Date() ) );
 	}
 
 	protected final void sleep() {
