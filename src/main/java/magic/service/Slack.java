@@ -22,7 +22,11 @@ public class Slack {
 	private String url;
 
 	public void message( String text ) {
-		log.info( "Status: {}", Utils.getEntityAsString( Request.Post( url ).bodyString( new Gson().toJson( text( text ) ), ContentType.APPLICATION_JSON ) ) );
+		post( new Gson().toJson( text( text ) ) );
+	}
+
+	public void post( String text ) {
+		log.info( "Status: {}", Utils.getEntityAsString( Request.Post( url ).bodyString( text, ContentType.APPLICATION_JSON ) ) );
 	}
 
 	public Map<String, String> text( String text ) {
