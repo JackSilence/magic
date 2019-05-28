@@ -1,5 +1,7 @@
 package magic.controller;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.JsonObject;
-
 import magic.service.AsyncExecutor;
 import magic.service.IService;
-import net.gpedro.integrations.slack.SlackMessage;
+import magic.service.Slack;
 
 @RestController
 public class ExecuteController {
@@ -25,28 +25,29 @@ public class ExecuteController {
 	@Autowired
 	private AsyncExecutor executor;
 
-	@PostMapping( "/execute/{name}" )
-	public JsonObject execute( @PathVariable String name, String text ) {
-		String message;
+	@Autowired
+	private Slack slack;
 
+	@PostMapping( "/execute/{name}" )
+	public Map<String, String> execute( @PathVariable String name, String text ) {
 		try {
 			Object bean = context.getBean( name );
 
 			Assert.isInstanceOf( IService.class, bean );
 
-			message = "Execute task manually: " + name;
+			String message = "Execute task manually: " + name;
 
 			log.error( message );
 
 			executor.exec( ( IService ) bean );
 
+			return slack.text( message );
+
 		} catch ( Exception e ) {
 			log.error( "", e );
 
-			message = e.getMessage();
+			return slack.text( e.getMessage() );
 
 		}
-
-		return new SlackMessage( message ).prepare();
 	}
 }
