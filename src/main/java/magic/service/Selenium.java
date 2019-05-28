@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import net.gpedro.integrations.slack.SlackMessage;
 
 public abstract class Selenium implements IService {
 	protected final Logger log = LoggerFactory.getLogger( getClass() );
@@ -48,7 +49,7 @@ public abstract class Selenium implements IService {
 		} catch ( RuntimeException e ) {
 			log.error( "", e );
 
-			slack.message( e.getMessage() );
+			slack.call( new SlackMessage( e.getMessage() ) );
 
 		} finally {
 			if ( driver != null ) {

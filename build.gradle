@@ -15,4 +15,5 @@ dependencies {
 	compile('io.github.bonigarcia:webdrivermanager:3.3.0')
 	compile('com.cloudinary:cloudinary-http44:1.22.1')
 	compile('org.apache.httpcomponents:fluent-hc:4.5.2')
+	compile('net.gpedro.integrations.slack:slack-webhook:1.4.0')
 }

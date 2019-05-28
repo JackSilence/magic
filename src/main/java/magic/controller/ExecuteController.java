@@ -1,7 +1,5 @@
 package magic.controller;
 
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import magic.service.AsyncExecutor;
 import magic.service.IService;
-import magic.service.Slack;
+import net.gpedro.integrations.slack.SlackMessage;
 
 @RestController
 public class ExecuteController {
@@ -25,11 +23,8 @@ public class ExecuteController {
 	@Autowired
 	private AsyncExecutor executor;
 
-	@Autowired
-	private Slack slack;
-
 	@PostMapping( "/execute/{name}" )
-	public Map<String, String> execute( @PathVariable String name, String text ) {
+	public SlackMessage execute( @PathVariable String name, String text ) {
 		try {
 			Object bean = context.getBean( name );
 
@@ -41,12 +36,12 @@ public class ExecuteController {
 
 			executor.exec( ( IService ) bean );
 
-			return slack.text( message );
+			return new SlackMessage( message );
 
 		} catch ( Exception e ) {
 			log.error( "", e );
 
-			return slack.text( e.getMessage() );
+			return new SlackMessage( e.getMessage() );
 
 		}
 	}
