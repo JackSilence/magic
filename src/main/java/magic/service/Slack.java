@@ -1,6 +1,6 @@
 package magic.service;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 
 import org.apache.http.client.fluent.Request;
@@ -30,10 +30,6 @@ public class Slack {
 	}
 
 	public Map<String, String> text( String text ) {
-		Map<String, String> map = new HashMap<>();
-
-		map.put( "text", text );
-
-		return map;
+		return Collections.singletonMap( "text", text );
 	}
 }
