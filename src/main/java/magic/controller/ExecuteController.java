@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.JsonObject;
+
 import magic.service.AsyncExecutor;
 import magic.service.IService;
 import net.gpedro.integrations.slack.SlackMessage;
@@ -24,25 +26,27 @@ public class ExecuteController {
 	private AsyncExecutor executor;
 
 	@PostMapping( "/execute/{name}" )
-	public SlackMessage execute( @PathVariable String name, String text ) {
+	public JsonObject execute( @PathVariable String name, String text ) {
+		String message;
+
 		try {
 			Object bean = context.getBean( name );
 
 			Assert.isInstanceOf( IService.class, bean );
 
-			String message = "Execute task manually: " + name;
+			message = "Execute task manually: " + name;
 
 			log.error( message );
 
 			executor.exec( ( IService ) bean );
 
-			return new SlackMessage( message );
-
 		} catch ( Exception e ) {
 			log.error( "", e );
 
-			return new SlackMessage( e.getMessage() );
+			message = e.getMessage();
 
 		}
+
+		return new SlackMessage( message ).prepare();
 	}
 }
