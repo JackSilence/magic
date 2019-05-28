@@ -49,6 +49,8 @@ public abstract class Selenium implements IService {
 			if ( driver != null ) {
 				driver.quit();
 
+				log.info( "driver.quit();" );
+
 			}
 		}
 	}
