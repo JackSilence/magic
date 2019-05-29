@@ -1,5 +1,18 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.18.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
 
 sourceCompatibility = 1.8
 
@@ -8,7 +21,9 @@ repositories {
 }
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-web:1.5.18.RELEASE')
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-devtools')
+	compile('org.springframework.boot:spring-boot-starter-web')
 	
 	compile('com.sendgrid:sendgrid-java:4.0.1')
 	compile('org.seleniumhq.selenium:selenium-java:2.53.1')
@@ -16,4 +31,6 @@ dependencies {
 	compile('com.cloudinary:cloudinary-http44:1.22.1')
 	compile('org.apache.httpcomponents:fluent-hc:4.5.2')
 	compile('net.gpedro.integrations.slack:slack-webhook:1.4.0')
+	
+	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
