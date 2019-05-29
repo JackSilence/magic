@@ -32,6 +32,4 @@ dependencies {
 	compile('com.cloudinary:cloudinary-http44:1.22.1')
 	compile('org.apache.httpcomponents:fluent-hc:4.5.2')
 	compile('net.gpedro.integrations.slack:slack-webhook:1.4.0')
-	
-	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
