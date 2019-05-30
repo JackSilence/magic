@@ -43,7 +43,7 @@ public class ExecuteController {
 
 			}
 
-			log.error( message.replace( "\n", "<br>" ) );
+			log.error( message );
 
 			executor.exec( ( IService ) bean );
 
