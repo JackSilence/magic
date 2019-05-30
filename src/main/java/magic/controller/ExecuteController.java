@@ -39,11 +39,11 @@ public class ExecuteController {
 			String message = "Execute task manually: " + name;
 
 			if ( StringUtils.isNotEmpty( command ) ) {
-				message += String.format( "\n%s %s", command, StringUtils.defaultString( text ) );
+				message += String.format( "\nCommand: %s %s", command, StringUtils.defaultString( text ) );
 
 			}
 
-			log.error( message );
+			log.error( message.replace( "\n", "<br>" ) );
 
 			executor.exec( ( IService ) bean );
 
