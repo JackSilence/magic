@@ -2,6 +2,7 @@ package magic.controller;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +30,18 @@ public class ExecuteController {
 	private Slack slack;
 
 	@PostMapping( "/execute/{name}" )
-	public Map<String, String> execute( @PathVariable String name, String text ) {
+	public Map<String, String> execute( @PathVariable String name, String command, String text ) {
 		try {
 			Object bean = context.getBean( name );
 
 			Assert.isInstanceOf( IService.class, bean );
 
 			String message = "Execute task manually: " + name;
+
+			if ( StringUtils.isNotEmpty( command ) ) {
+				message += String.format( "\n%s %s", command, StringUtils.defaultString( text ) );
+
+			}
 
 			log.error( message );
 
