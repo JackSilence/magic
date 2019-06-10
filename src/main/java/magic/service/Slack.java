@@ -1,8 +1,5 @@
 package magic.service;
 
-import java.util.Collections;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +13,5 @@ public class Slack {
 
 	public void call( SlackMessage message ) {
 		new SlackApi( url ).call( message );
-	}
-
-	public Map<String, String> text( String text ) {
-		return Collections.singletonMap( "text", text );
 	}
 }
