@@ -90,4 +90,14 @@ public class Utils {
 	public static String subject( String text ) {
 		return String.format( "%s_%s", text, new SimpleDateFormat( "yyyyMMddHH" ).format( new Date() ) );
 	}
+
+	public static void sleep( long millis ) {
+		try {
+			Thread.sleep( millis );
+
+		} catch ( InterruptedException e ) {
+			throw new RuntimeException();
+
+		}
+	}
 }
