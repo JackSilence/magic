@@ -1,5 +1,6 @@
 package magic.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,11 @@ public class AsyncExecutor {
 	public void exec( IService service ) {
 		try {
 			service.exec();
+
 		} catch ( RuntimeException e ) {
 			log.error( "", e );
 
-			slack.call( new SlackMessage( e.getMessage() ) );
-
+			slack.call( new SlackMessage( StringUtils.defaultString( e.getMessage(), e.getClass().getName() ) ) );
 		}
 	}
 }
