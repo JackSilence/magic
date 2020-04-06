@@ -27,7 +27,7 @@ public class SendGrid implements IMailService {
 	@Override
 	public void send( String subject, String content ) {
 		try {
-			Email from = new Email( "notice@sendgrid.com" ), to = new Email( mail );
+			Email from = new Email( "notice@sendgrid.net" ), to = new Email( mail );
 
 			Request request = new Request();
 
