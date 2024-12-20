@@ -4,10 +4,10 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.openqa.selenium.By;
@@ -88,7 +88,7 @@ public abstract class Selenium implements IService {
 		try (ByteArrayOutputStream stream = new ByteArrayOutputStream()) {
 			ImageIO.write( image, "png", stream );
 
-			return String.format( DATA_URI, DatatypeConverter.printBase64Binary( stream.toByteArray() ) );
+			return String.format(DATA_URI, Base64.getEncoder().encodeToString(stream.toByteArray()));
 
 		} catch ( IOException e ) {
 			throw new RuntimeException( e );

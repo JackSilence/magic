@@ -1,35 +1,52 @@
-buildscript {
-	ext {
-		springBootVersion = '1.5.18.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+plugins {
+	id 'org.springframework.boot' version '3.3.6'
+	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+	id 'java-library'
+	id 'eclipse'
+	id 'maven-publish'
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-
-sourceCompatibility = 1.8
+java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
 
 repositories {
 	mavenCentral()
 }
 
+bootJar {
+	enabled = false
+}
+
+jar {
+	enabled = true
+	archiveClassifier = ''
+}
+
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-actuator')
-	compile('org.springframework.boot:spring-boot-devtools')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.boot:spring-boot-starter-mail')
-	
-	compile('com.sendgrid:sendgrid-java:4.0.1')
-	compile('org.seleniumhq.selenium:selenium-java:2.53.1')
-	compile('io.github.bonigarcia:webdrivermanager:3.3.0')
-	compile('com.cloudinary:cloudinary-http44:1.22.1')
-	compile('org.apache.httpcomponents:fluent-hc:4.5.2')
-	compile('net.gpedro.integrations.slack:slack-webhook:1.4.0')
+	api 'org.springframework.boot:spring-boot-starter-actuator'
+	api 'org.springframework.boot:spring-boot-devtools'
+	api 'org.springframework.boot:spring-boot-starter-web'
+	api 'org.springframework.boot:spring-boot-starter-mail'
+	api 'com.sendgrid:sendgrid-java:4.0.1'
+	api 'org.seleniumhq.selenium:selenium-java:2.53.1'
+	api 'io.github.bonigarcia:webdrivermanager:3.3.0'
+	api 'com.cloudinary:cloudinary-http44:1.22.1'
+	api 'org.apache.httpcomponents:fluent-hc:4.5.2'
+	api 'net.gpedro.integrations.slack:slack-webhook:1.4.0'
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
+	repositories {
+		maven {
+			name = 'jitpack'
+			url = uri("https://jitpack.io")
+		}
+	}
 }

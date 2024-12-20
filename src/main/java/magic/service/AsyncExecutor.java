@@ -18,6 +18,7 @@ public class AsyncExecutor {
 	@Autowired
 	private Slack slack;
 
+	@SuppressWarnings( "deprecation" )
 	@Async
 	public void exec( IService service ) {
 		try {
